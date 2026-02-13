@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful AI - Mental Health Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using Google Fonts for a premium look -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <nav class="sidebar">
+            <div class="brand">
+                <i data-lucide="brain-circuit" class="brand-icon"></i>
+                <span class="brand-text">Mindful AI</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active" onclick="switchTab('home')">
+                    <i data-lucide="home"></i> Home
+                </li>
+                <li onclick="switchTab('chat')">
+                    <i data-lucide="message-circle"></i> Chat
+                </li>
+                <li onclick="switchTab('dashboard')">
+                    <i data-lucide="bar-chart-2"></i> Dashboard
+                </li>
+                <li onclick="switchTab('resources')">
+                    <i data-lucide="book-open"></i> Resources
+                </li>
+            </ul>
+            <div class="user-profile">
+                <div class="avatar">U</div>
+                <div class="user-info">
+                    <span class="name">User</span>
+                    <span class="status">Online</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- Home Interface -->
+            <section id="home-view" class="view active">
+                <div class="hero-section">
+                    <h1>Your Mental Health Companion</h1>
+                    <p>AI-driven support, available 24/7. A safe space to share your thoughts and track your well-being.
+                    </p>
+                    <button class="cta-btn" onclick="switchTab('chat')">Start Chatting <i
+                            data-lucide="arrow-right"></i></button>
+                </div>
+
+                <div class="features-preview">
+                    <div class="feature-item" onclick="switchTab('chat')">
+                        <i data-lucide="message-square-heart"></i>
+                        <h3>Empathetic Chat</h3>
+                        <p>Talk to an AI that listens without judgment.</p>
+                    </div>
+                    <div class="feature-item" onclick="switchTab('dashboard')">
+                        <i data-lucide="trending-up"></i>
+                        <h3>Track Progress</h3>
+                        <p>Monitor your mood and stress levels over time.</p>
+                    </div>
+                    <div class="feature-item" onclick="switchTab('resources')">
+                        <i data-lucide="shield-check"></i>
+                        <h3>Private & Secure</h3>
+                        <p>Your conversations are private and local.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Interface -->
+            <section id="chat-view" class="view">
+                <header class="chat-header">
+                    <div class="ai-status">
+                        <div class="status-dot"></div>
+                        <span>AI Assistant is ready to listen</span>
+                    </div>
+                </header>
+
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Initial Greeting -->
+                    <div class="message ai">
+                        <div class="message-content">
+                            Hello. I'm here to listen and support you. How are you feeling today?
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="input-wrapper">
+                        <textarea id="user-input" placeholder="Type a message..." rows="1"></textarea>
+                        <button id="send-btn" aria-label="Send message">
+                            <i data-lucide="send"></i>
+                        </button>
+                    </div>
+                    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                        <span>AI is thinking...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Interface -->
+            <section id="dashboard-view" class="view" style="display: none;">
+                <header class="dashboard-header">
+                    <h1>Well-being Overview</h1>
+                    <p>Based on your recent interactions</p>
+                </header>
+
+                <!-- Health Score Board -->
+                <div class="score-board-container">
+                    <div class="score-chart-wrapper">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" id="score-circle-path" stroke-dasharray="0, 100" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="score-text-overlay">
+                            <span id="health-score-value">--</span>
+                            <span class="label">Health Score</span>
+                        </div>
+                    </div>
+
+                    <div class="score-details-panel">
+                        <div class="score-detail-item">
+                            <span class="detail-label">Status</span>
+                            <span class="detail-value" id="health-status">Analyzing...</span>
+                        </div>
+                        <div class="score-detail-item">
+                            <span class="detail-label">Trend</span>
+                            <span class="detail-value positive" id="health-trend">
+                                <i data-lucide="trending-up" class="trend-icon"></i>
+                                <span id="trend-text">Stable</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon mood">
+                            <i data-lucide="smile"></i>
+                        </div>
+                        <h3>Current Mood</h3>
+                        <p class="stat-value" id="current-mood">Neutral</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stress">
+                            <i data-lucide="activity"></i>
+                        </div>
+                        <h3>Stress Level</h3>
+                        <p class="stat-value" id="stress-level">Low</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon engagement">
+                            <i data-lucide="message-square"></i>
+                        </div>
+                        <h3>Interactions</h3>
+                        <p class="stat-value" id="interaction-count">0</p>
+                    </div>
+                </div>
+
+                <div class="charts-area">
+                    <div class="chart-container">
+                        <h3>Mood Trends</h3>
+                        <div class="placeholder-chart">
+                            <!-- Simple CSS bar chart simulation -->
+                            <div class="bar" style="height: 60%" title="Mon"></div>
+                            <div class="bar" style="height: 40%" title="Tue"></div>
+                            <div class="bar" style="height: 75%" title="Wed"></div>
+                            <div class="bar" style="height: 50%" title="Thu"></div>
+                            <div class="bar" style="height: 80%" title="Fri"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resources Interface -->
+            <section id="resources-view" class="view" style="display: none;">
+                <header class="resources-header">
+                    <h1>Mental Health Resources</h1>
+                </header>
+                <div class="resource-list">
+                    <div class="resource-card" id="privacy-resource">
+                        <i data-lucide="shield-check"></i>
+                        <h3>Privacy & Security</h3>
+                        <p>Learn how your data is protected and kept local.</p>
+                        <button class="resource-btn"
+                            onclick="alert('Your conversations are processed locally in your browser and are not sent to any external server. This ensures your privacy.')">Read
+                            Policy</button>
+                    </div>
+                    <div class="resource-card">
+                        <i data-lucide="stethoscope"></i>
+                        <h3>Doctor Consultation</h3>
+                        <p>Connect with a licensed professional for personalized care.</p>
+                        <button class="resource-btn" onclick="alert('Redirecting to doctor search...')">Find a
+                            Doctor</button>
+                    </div>
+                    <div class="resource-card">
+                        <i data-lucide="phone"></i>
+                        <h3>Crisis Helplines</h3>
+                        <p>Immediate support available 24/7.</p>
+                        <button class="resource-btn">View Numbers</button>
+                    </div>
+                    <div class="resource-card">
+                        <i data-lucide="wind"></i>
+                        <h3>Breathing Exercises</h3>
+                        <p>Simple techniques to reduce anxiety.</p>
+                        <button class="resource-btn">Start Guide</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
